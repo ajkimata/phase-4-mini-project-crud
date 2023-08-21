@@ -53,11 +53,13 @@ RSpec.describe "Spices", type: :request do
   describe "POST /spices" do
     let!(:spice_params) do
       {
-        title: "Caraway Seeds",
-        image: "caraway.jpg",
-        description: "Caraway description",
-        notes: "Caraway notes",
-        rating: 2
+        spice: {
+          title: "Caraway Seeds",
+          image: "caraway.jpg",
+          description: "Caraway description",
+          notes: "Caraway notes",
+          rating: 2
+        }
       }
     end
 
@@ -97,13 +99,13 @@ RSpec.describe "Spices", type: :request do
     end
     
     it 'updates the spice with the matching id' do
-      patch "/spices/#{spice.id}", params: { rating: 1 }
+      patch "/spices/#{spice.id}", params: { spice: { rating: 1 } }
       
       expect(spice.reload.rating).to eq(1)
     end
 
     it 'returns the spice data' do
-      patch "/spices/#{spice.id}", params: { rating: 1 }
+      patch "/spices/#{spice.id}", params: { spice: { rating: 1 } }
 
       expect(response.body).to include_json({
         id: a_kind_of(Integer),
